@@ -26,6 +26,14 @@ class AuthServiceClass {
       throw new Error('Failed to log in. Please try again.');
     }
   }
+  async getCurrentUser(token) {
+    try {
+      const response = await authApi.getCurrentUser(token);
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to fetch current user. Please try again.');
+    }
+  }
 
 }
 

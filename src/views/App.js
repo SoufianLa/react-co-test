@@ -8,15 +8,17 @@ import { pathSignup, pathLogin, pathDashboard } from '../routes';
 
 function App() {
 
+
   return (
     <div className="wrapper">
 
         <Routes>
-          <Route path={pathDashboard} element={<DashboardPage />} />
 
-          <Route path={pathLogin} element={<LoginPage />} />
+        <Route path={pathSignup()} element={<SignupPage />} />
+        <Route path={pathDashboard()} element={<DashboardPage />} />
+        <Route path={pathLogin()} element={<LoginPage />} />
   
-          <Route path={pathSignup} element={<SignupPage />} />
+        
  
         </Routes>
 

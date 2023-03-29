@@ -33,7 +33,7 @@ const SignupForm = () => {
     try {
       await AuthService.signup(firstName, lastName, password, avatar);
       console.log("ok sign up");
-      navigate(pathLogin);
+      navigate(pathLogin());
     } catch (error) {
       setErrorMessage(error.message);
     }

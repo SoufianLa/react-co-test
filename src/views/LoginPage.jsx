@@ -1,14 +1,18 @@
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import React from 'react';
+import { Container, Row, Col, Card } from 'react-bootstrap';
+import LoginForm from '../components/LoginForm';
 
 const LoginPage = () => {
   return (
-    <Container>
-      <Row className="justify-content-md-center">
-        <Col xs={12} md={6}>
-          <h1 className="text-center my-5">Login</h1>
-          
+    <Container className="my-5">
+      <Row className="justify-content-center">
+        <Col sm={8} md={6} lg={4}>
+          <Card>
+            <Card.Header className="text-center">Login</Card.Header>
+            <Card.Body>
+              <LoginForm />
+            </Card.Body>
+          </Card>
         </Col>
       </Row>
     </Container>

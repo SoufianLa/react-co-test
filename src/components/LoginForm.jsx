@@ -22,7 +22,7 @@ const LoginForm = () => {
       await AuthService.login(email, password);
       // Redirect to dashboard or perform any other action upon successful login
       console.log("ok");
-      navigate(pathDashboard);
+      navigate(pathDashboard());
     } catch (error) {
       // Handle login error
       console.error(error);
