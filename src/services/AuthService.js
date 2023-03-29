@@ -1,4 +1,5 @@
-import { authApi } from '../api/authApi';
+import { authApi, HTTP_CREATED, HTTP_OK } from '../api/authApi';
+import {INTERNAL_MSG, ERROR_MSG} from '../messages'
 
 
 class AuthServiceClass {
@@ -14,29 +15,31 @@ class AuthServiceClass {
 
     try {
       const response = await authApi.signup(formData);
-      if (response.status === 201) return true;
+      if (response.status === HTTP_CREATED) return true;
     } catch (error) {
-      throw new Error('Failed to sign up. internal error.');
+      throw new Error(INTERNAL_MSG);
     }
-    throw new Error('Failed to sign up. Please try again later.');
+    throw new Error(ERROR_MSG);
   }
 
 
   async login(username, password) {
     try {
       const response = await authApi.login({ username, password });
-      return response.data;
+      if (response.status === HTTP_OK) return  response.data;
     } catch (error) {
-      throw new Error('Failed to log in. Please try again.');
+      throw new Error(INTERNAL_MSG);
     }
+    throw new Error(ERROR_MSG);
   }
   async getCurrentUser(token) {
     try {
       const response = await authApi.getCurrentUser(token);
-      return response.data;
+      if (response.status === HTTP_OK) return  response.data;
     } catch (error) {
-      throw new Error('Failed to fetch current user. Please try again.');
+      throw new Error(INTERNAL_MSG);
     }
+    throw new Error(ERROR_MSG);
   }
 
 }

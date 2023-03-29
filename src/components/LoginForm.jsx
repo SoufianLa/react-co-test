@@ -3,12 +3,13 @@ import AuthService from '../services/AuthService';
 import { useNavigate } from 'react-router-dom';
 import { pathDashboard } from '../routes';
 import PropTypes from 'prop-types';
-import { Form, Button, } from 'react-bootstrap';
+import { Form, Button, Alert} from 'react-bootstrap';
 
 
 const LoginForm = ({setToken}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
   const handleEmailChange = (event) => {
@@ -21,16 +22,20 @@ const LoginForm = ({setToken}) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("submitting")
     try {
       const user = await AuthService.login(email, password);
       setToken(user);
       // Redirect to dashboard or perform any other action upon successful login
       navigate(pathDashboard());
     } catch (error) {
+      setErrorMessage(error.message);
       // Handle login error
       console.error(error);
     }
+  };
+
+  const handleAlertDismiss = () => {
+    setErrorMessage('');
   };
 
   return (
@@ -56,7 +61,9 @@ const LoginForm = ({setToken}) => {
         required
       />
     </Form.Group>
-
+    {errorMessage && (
+        <Alert variant="danger" dismissible onClose={handleAlertDismiss} className="signup-alert">{errorMessage}</Alert>
+      )}
     <Button variant="primary" type="submit" className="button-login">
       Log in
     </Button>

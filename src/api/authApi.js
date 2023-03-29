@@ -1,6 +1,9 @@
 import axios from 'axios';
+import {INTERNAL_MSG} from '../messages'
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL+'/auth';
+const HTTP_OK = 200;
+const HTTP_CREATED = 201;
 const api = axios.create({
     baseURL: BASE_URL,
     headers: {
@@ -16,7 +19,7 @@ const authApi = {
           }});
         return response;
       } catch (error) {
-        throw new Error('Failed to sign up. Please try again.');
+        throw new Error(INTERNAL_MSG);
       }
     },
   
@@ -40,12 +43,12 @@ const authApi = {
         });
         return response;
       } catch (error) {
-        throw new Error('Failed to get current user. Please try again.');
+        throw new Error(INTERNAL_MSG);
       }
   }
 
 };
 
   
-export { authApi }; 
+export { authApi, HTTP_OK, HTTP_CREATED}; 
 

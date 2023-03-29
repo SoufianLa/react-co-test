@@ -11,7 +11,6 @@ const SignupForm = () => {
   const [password, setPassword] = useState('');
   const [pictures, setPictures] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
-  const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
 
   const handleFirstNameChange = (event) => {
