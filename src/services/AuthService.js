@@ -2,12 +2,12 @@ import { authApi } from '../api/authApi';
 
 
 class AuthServiceClass {
-  async signup(firstName, lastName, password, avatar) {
+  async signup(firstName, lastName, password, pictures) {
     const formData = new FormData();
     formData.append('firstName', firstName);
     formData.append('lastName', lastName);
     formData.append('password', password);
-    formData.append('avatar', avatar);
+    formData.append('avatar', pictures);
 
     try {
       const response = await authApi.signup(formData);

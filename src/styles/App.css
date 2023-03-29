@@ -4,6 +4,9 @@
 .button-login{
   margin-top: 3px;
 }
+.button-signup{
+  margin-top: 4px;
+}
 
 .card-dashboard{
   margin-top: 100px;
@@ -17,4 +20,8 @@
 .caroussel-img{
   width: 800px;
   height: 400px;
+}
+
+.signup-alert{
+  margin-top: 5px;
 }
