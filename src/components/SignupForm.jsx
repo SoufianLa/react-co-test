@@ -41,7 +41,7 @@ const SignupForm = () => {
     }
 
     try {
-      await AuthService.signup(firstName, lastName, password, pictures);
+      await AuthService.signup(firstName, lastName, email, password, pictures);
       navigate(pathLogin());
     } catch (error) {
       setErrorMessage(error.message);

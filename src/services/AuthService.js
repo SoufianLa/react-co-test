@@ -2,19 +2,23 @@ import { authApi } from '../api/authApi';
 
 
 class AuthServiceClass {
-  async signup(firstName, lastName, password, pictures) {
+  async signup(firstName, lastName, email, password, pictures) {
     const formData = new FormData();
     formData.append('firstName', firstName);
     formData.append('lastName', lastName);
+    formData.append('email', email);
     formData.append('password', password);
-    formData.append('avatar', pictures);
+    for (let i = 0; i < pictures.length; i++) {
+      formData.append('photos', pictures[i]);
+    }
 
     try {
       const response = await authApi.signup(formData);
-      return response.data;
+      if (response.status === 201) return true;
     } catch (error) {
-      throw new Error('Failed to sign up. Please try again.');
+      throw new Error('Failed to sign up. internal error.');
     }
+    throw new Error('Failed to sign up. Please try again later.');
   }
 
 
