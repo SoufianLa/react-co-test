@@ -1,6 +1,7 @@
 import { authApi } from '../api/authApi';
 
-class AuthService {
+
+class AuthServiceClass {
   async signup(firstName, lastName, password, avatar) {
     const formData = new FormData();
     formData.append('firstName', firstName);
@@ -15,8 +16,20 @@ class AuthService {
       throw new Error('Failed to sign up. Please try again.');
     }
   }
+
+
+  async login(username, password) {
+    try {
+      const response = await authApi.login({ username, password });
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to log in. Please try again.');
+    }
+  }
+
 }
 
-export default new AuthService;
+const AuthService = new AuthServiceClass();
+export default AuthService;
 
 

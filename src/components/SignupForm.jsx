@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthService from '../services/AuthService';
+import { pathLogin } from '../routes';
 
 const SignupForm = () => {
   const [firstName, setFirstName] = useState('');
@@ -31,8 +32,8 @@ const SignupForm = () => {
 
     try {
       await AuthService.signup(firstName, lastName, password, avatar);
-      console.log("ok");
-      navigate('/dashboard');
+      console.log("ok sign up");
+      navigate(pathLogin);
     } catch (error) {
       setErrorMessage(error.message);
     }

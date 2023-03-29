@@ -4,6 +4,7 @@ import SignupPage from './SignupPage';
 import DashboardPage from './DashboardPage';
 import LoginPage from './LoginPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { pathSignup, pathLogin, pathDashboard } from '../routes';
 
 function App() {
 
@@ -11,11 +12,11 @@ function App() {
     <div className="wrapper">
 
         <Routes>
-          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path={pathDashboard} element={<DashboardPage />} />
 
-          <Route path="/login" element={<LoginPage />} />
+          <Route path={pathLogin} element={<LoginPage />} />
   
-          <Route path="/sign-up" element={<SignupPage />} />
+          <Route path={pathSignup} element={<SignupPage />} />
  
         </Routes>
 
