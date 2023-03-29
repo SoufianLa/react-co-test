@@ -25,12 +25,9 @@ const LoginForm = ({setToken}) => {
     try {
       const user = await AuthService.login(email, password);
       setToken(user);
-      // Redirect to dashboard or perform any other action upon successful login
       navigate(pathDashboard());
     } catch (error) {
       setErrorMessage(error.message);
-      // Handle login error
-      console.error(error);
     }
   };
 
