@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import AuthService from '../services/AuthService';
 import { useNavigate } from 'react-router-dom';
 import { pathDashboard } from '../routes';
+import PropTypes from 'prop-types';
+import { Form, Button, } from 'react-bootstrap';
 
-const LoginForm = () => {
+
+const LoginForm = ({setToken}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -18,10 +21,11 @@ const LoginForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log("submitting")
     try {
-      await AuthService.login(email, password);
+      const user = await AuthService.login(email, password);
+      setToken(user);
       // Redirect to dashboard or perform any other action upon successful login
-      console.log("ok");
       navigate(pathDashboard());
     } catch (error) {
       // Handle login error
@@ -30,30 +34,38 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="email">Email:</label>
-      <input
+    <Form onSubmit={handleSubmit}>
+    <Form.Group controlId="formBasicEmail">
+      <Form.Label>Email:</Form.Label>
+      <Form.Control
         type="email"
-        id="email"
-        name="email"
-        required
+        placeholder="Enter email"
         value={email}
         onChange={handleEmailChange}
-      />
-
-      <label htmlFor="password">Password:</label>
-      <input
-        type="password"
-        id="password"
-        name="password"
         required
+      />
+    </Form.Group>
+
+    <Form.Group controlId="formBasicPassword">
+      <Form.Label>Password:</Form.Label>
+      <Form.Control
+        type="password"
+        placeholder="Password"
         value={password}
         onChange={handlePasswordChange}
+        required
       />
+    </Form.Group>
 
-      <button type="submit">Log in</button>
-    </form>
+    <Button variant="primary" type="submit" className="button-login">
+      Log in
+    </Button>
+  </Form>
   );
 };
+
+LoginForm.propTypes = {
+  setToken: PropTypes.func.isRequired
+}
 
 export default LoginForm;

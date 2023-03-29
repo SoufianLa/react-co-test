@@ -1,15 +1,25 @@
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 import SignupForm from '../components/SignupForm';
+import { pathLogin } from '../routes';
+import { Link} from 'react-router-dom';
 
 const SignupPage = () => {
   return (
-    <Container>
+        <Container className="justify-content-center">
       <Row className="justify-content-md-center">
-        <Col xs={12} md={6}>
-          <h1 className="text-center my-5">Dashboard</h1>
-          <SignupForm />
+        <Col md={6}>
+          <Card className='card-login'>
+            <Card.Header className="text-center">Sign up</Card.Header>
+            <Card.Body>
+            <SignupForm />
+            <div className="text-center">
+                you already have an account?{' '}
+                <Link to={pathLogin()} className="text-decoration-none">
+                  Sign In
+                </Link>
+              </div>
+            </Card.Body>
+          </Card>
         </Col>
       </Row>
     </Container>
