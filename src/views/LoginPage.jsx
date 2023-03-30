@@ -5,7 +5,7 @@ import { Link} from 'react-router-dom';
 import { pathSignup } from '../routes';
 
 
-const LoginPage = ({setToken}) => {
+const LoginPage = () => {
   return (
     <Container className="justify-content-center">
       <Row className="justify-content-md-center">
@@ -13,7 +13,7 @@ const LoginPage = ({setToken}) => {
           <Card className='card-login'>
             <Card.Header className="text-center">Login</Card.Header>
             <Card.Body>
-              <LoginForm setToken={setToken} />
+              <LoginForm />
               <div className="text-center">
                 Don't have an account?{' '}
                 <Link to={pathSignup()} className="text-decoration-none">

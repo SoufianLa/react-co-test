@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import AuthService from '../services/AuthService';
 import { useNavigate } from 'react-router-dom';
-import { pathDashboard } from '../routes';
+import { pathDashboard, pathSignup } from '../routes';
 import PropTypes from 'prop-types';
 import { Form, Button, Alert} from 'react-bootstrap';
 
 
-const LoginForm = ({setToken}) => {
+const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -23,8 +23,7 @@ const LoginForm = ({setToken}) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const user = await AuthService.login(email, password);
-      setToken(user);
+      await AuthService.login(email, password);
       navigate(pathDashboard());
     } catch (error) {
       setErrorMessage(error.message);
@@ -67,9 +66,5 @@ const LoginForm = ({setToken}) => {
   </Form>
   );
 };
-
-LoginForm.propTypes = {
-  setToken: PropTypes.func.isRequired
-}
 
 export default LoginForm;

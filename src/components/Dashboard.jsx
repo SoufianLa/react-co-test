@@ -2,21 +2,23 @@ import React, { useState, useEffect } from 'react';
 import AuthService from '../services/AuthService';
 import { Row, Col, Image, Carousel } from 'react-bootstrap';
 import { pathLogin } from '../routes';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Dashboard = () => {
+
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const currentUser = await AuthService.getCurrentUser("djjdshjh");
+        const currentUser = await AuthService.getCurrentUser();
         setUser(currentUser);
         setLoading(false);
       } catch (error) {
-        console.error(error);
+        setErrorMessage(error.message);
       }
     };
 
@@ -44,7 +46,7 @@ const Dashboard = () => {
           <div>
             <h4>{`${user.firstName} ${user.lastName}`}</h4>
             <p>{user.email}</p>
-            <a href="#" onClick={handleLogout}>Log out</a>
+            <Link href="#" onClick={handleLogout}>Log out</Link>
           </div>
         </Col>
         <Col xs={8}>
@@ -68,5 +70,6 @@ const Dashboard = () => {
       </Row>
   );
 };
+
 
 export default Dashboard;
