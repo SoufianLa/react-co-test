@@ -1,8 +1,12 @@
 import { authApi, HTTP_CREATED, HTTP_OK } from '../api/authApi';
 import {INTERNAL_MSG, ERROR_MSG} from '../messages'
+import SecureLS from "secure-ls";
+
 
 
 class AuthServiceClass {
+  #secureLocalStorage = new SecureLS();
+
   async signup(firstName, lastName, email, password, pictures) {
     const formData = new FormData();
     formData.append('firstName', firstName);
@@ -27,7 +31,7 @@ class AuthServiceClass {
     try {
       const response = await authApi.login({ username, password });
       if (response.status === HTTP_OK){
-        this.#saveToken(response.data)
+        this.saveToken(response.data)
         return response.data;
       } 
     } catch (error) {
@@ -37,7 +41,7 @@ class AuthServiceClass {
   }
   async getCurrentUser() {
     try {
-      const token = localStorage.getItem('token')
+      const token = this.getToken();
       const response = await authApi.getCurrentUser(token);
       if (response.status === HTTP_OK) return  response.data;
     } catch (error) {
@@ -46,14 +50,20 @@ class AuthServiceClass {
     throw new Error(ERROR_MSG);
   }
 
-  #isLoggedIn(){
-      return localStorage.getItem('token') ? true: false;
+  isLoggedIn(){
+      return this.getToken() ? true: false;
     
   }
 
-  #saveToken(user){
-    localStorage.setItem('token', user.body.accessToken);
-  };
+  saveToken(user) {
+    this.#secureLocalStorage.set("token", user.body.accessToken);
+  }
+  
+  getToken() {
+
+    return this.#secureLocalStorage.get("token");
+
+  }
 
 }
 
