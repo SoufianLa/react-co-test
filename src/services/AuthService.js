@@ -13,9 +13,13 @@ class AuthServiceClass {
     formData.append('lastName', lastName);
     formData.append('email', email);
     formData.append('password', password);
+
+    //formData.append('photos[]', pictures);
+
     for (let i = 0; i < pictures.length; i++) {
-      formData.append('photos', pictures[i]);
+      formData.append(`photos[${i}]`, pictures[i], pictures[i].name);
     }
+    
 
     try {
       const response = await authApi.signup(formData);
@@ -27,9 +31,12 @@ class AuthServiceClass {
   }
 
 
-  async login(username, password) {
+  async login(email, password) {
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('password', password);
     try {
-      const response = await authApi.login({ username, password });
+      const response = await authApi.login(formData);
       if (response.status === HTTP_OK){
         this.saveToken(response.data)
         return response.data;
@@ -43,9 +50,8 @@ class AuthServiceClass {
     try {
       const token = this.getToken();
       const response = await authApi.getCurrentUser(token);
-      if (response.status === HTTP_OK) return  response.data;
+      if (response.status === HTTP_OK) return  response.data.body;
     } catch (error) {
-      console.log("------")
       throw new Error(INTERNAL_MSG);
     }
     throw new Error(ERROR_MSG);
@@ -57,7 +63,8 @@ class AuthServiceClass {
   }
 
   saveToken(user) {
-    this.#secureLocalStorage.set("token", user.body.accessToken);
+    console.log(user)
+    this.#secureLocalStorage.set("token", user.body.session.access_token);
   }
   
   getToken() {

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {INTERNAL_MSG} from '../messages'
 
-const BASE_URL = process.env.REACT_APP_API_BASE_URL+'/auth';
+const BASE_URL = process.env.REACT_APP_API_BASE_URL+'/api';
 const HTTP_OK = 200;
 const HTTP_CREATED = 201;
 const api = axios.create({
@@ -13,7 +13,7 @@ const api = axios.create({
 const authApi = {
     async signup(formData) {
       try {
-        const response = await api.post('/signup', formData, {
+        const response = await api.post('/auth/signup', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }});
@@ -23,9 +23,9 @@ const authApi = {
       }
     },
   
-    async login(email, password){
+    async login(formData){
     try {
-      const response = await api.post('/login', { email, password }, {
+      const response = await api.post('/auth/login', formData, {
         'Content-Type': 'application/json'
       });
       return response;

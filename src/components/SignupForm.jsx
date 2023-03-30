@@ -52,7 +52,7 @@ const SignupForm = () => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} encType='multipart/form-data'>
       <Form.Group controlId="firstName">
         <Form.Label>First Name</Form.Label>
         <Form.Control
@@ -106,6 +106,7 @@ const SignupForm = () => {
         <Form.Label>Pictures</Form.Label>
         <Form.Control
           type="file"
+          name="file"
           multiple
           accept="image/*"
           onChange={handlePicturesChange}

@@ -43,16 +43,17 @@ const Dashboard = () => {
     navigate(pathLogin());
   };
 
+  console.log(user)
   return (
     <Row className="mt-5">
         <Col xs={4}>
           <Image
-            src={user.avatarUrl}
+            src={user.avatar_url}
             roundedCircle
             className="mb-3 avatar-img"
           />
           <div>
-            <h4>{`${user.firstName} ${user.lastName}`}</h4>
+            <h4>{user.fullName}</h4>
             <p>{user.email}</p>
             <Link href="#" onClick={handleLogout}>Log out</Link>
           </div>
@@ -63,7 +64,7 @@ const Dashboard = () => {
         <Carousel.Item key={photo.id}>
           <Image
             src={photo.url}
-            alt={photo.title}
+            alt={photo.name}
             fluid
             className="d-block w-100 caroussel-img"
           />

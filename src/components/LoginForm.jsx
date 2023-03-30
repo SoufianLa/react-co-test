@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import AuthService from '../services/AuthService';
 import { useNavigate } from 'react-router-dom';
-import { pathDashboard, pathSignup } from '../routes';
-import PropTypes from 'prop-types';
+import { pathDashboard } from '../routes';
 import { Form, Button, Alert} from 'react-bootstrap';
 
 
