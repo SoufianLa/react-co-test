@@ -1,6 +1,6 @@
 
 
-const PATH_LOGIN = "/login"
+const PATH_LOGIN = "/"
 const PATH_SIGNUP = "/sign-up"
 const PATH_DASHBOARD = "/dashboard" 
 

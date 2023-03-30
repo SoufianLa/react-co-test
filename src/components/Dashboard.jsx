@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import AuthService from '../services/AuthService';
-import { Row, Col, Image, Carousel } from 'react-bootstrap';
+import { Row, Col, Image, Carousel, Alert } from 'react-bootstrap';
 import { pathLogin } from '../routes';
 import { useNavigate, Link } from 'react-router-dom';
 
 const Dashboard = () => {
 
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [showMessage, setShowMessage] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,18 +16,26 @@ const Dashboard = () => {
       try {
         const currentUser = await AuthService.getCurrentUser();
         setUser(currentUser);
-        setLoading(false);
       } catch (error) {
-        setErrorMessage(error.message);
+        setShowMessage(true)
       }
     };
 
     fetchUser();
   }, []);
 
-  if (loading) {
+  if (showMessage) {
+    return (
+      <Alert variant="danger" className='alert-message-dashboard'>
+        Internal Error. Please Try to <Link to={pathLogin()}>login</Link> Later.
+      </Alert>
+    );
+  }
+
+  if (!user) {
     return <div>Loading...</div>;
   }
+
 
   const handleLogout = (e) => {
     e.preventDefault();

@@ -45,6 +45,7 @@ class AuthServiceClass {
       const response = await authApi.getCurrentUser(token);
       if (response.status === HTTP_OK) return  response.data;
     } catch (error) {
+      console.log("------")
       throw new Error(INTERNAL_MSG);
     }
     throw new Error(ERROR_MSG);
