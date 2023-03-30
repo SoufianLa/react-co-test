@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import AuthService from '../services/AuthService';
-import { Row, Col, Image, Carousel, Alert } from 'react-bootstrap';
+import { Row, Col, Alert } from 'react-bootstrap';
 import { pathLogin } from '../routes';
 import { useNavigate, Link } from 'react-router-dom';
+import ProfileInfo from './ProfileInfo';
+import PhotoCarousel from './PhotoCarousel';
 
-const Dashboard = () => {
+const UserOverview = () => {
 
   const [user, setUser] = useState(null);
   const [showMessage, setShowMessage] = useState(false);
@@ -43,42 +45,17 @@ const Dashboard = () => {
     navigate(pathLogin());
   };
 
-  console.log(user)
   return (
     <Row className="mt-5">
         <Col xs={4}>
-          <Image
-            src={user.avatar_url}
-            roundedCircle
-            className="mb-3 avatar-img"
-          />
-          <div>
-            <h4>{user.fullName}</h4>
-            <p>{user.email}</p>
-            <Link href="#" onClick={handleLogout}>Log out</Link>
-          </div>
+          <ProfileInfo user={user} handleLogout={handleLogout}></ProfileInfo>
         </Col>
         <Col xs={8}>
-          <Carousel>
-          {user.photos.map((photo) => (
-        <Carousel.Item key={photo.id}>
-          <Image
-            src={photo.url}
-            alt={photo.name}
-            fluid
-            className="d-block w-100 caroussel-img"
-          />
-          <Carousel.Caption>
-            <h3>{photo.title}</h3>
-            <p>{photo.description}</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-      ))}
-          </Carousel>
+         <PhotoCarousel photos={user.photos} ></PhotoCarousel>
         </Col>
       </Row>
   );
 };
 
 
-export default Dashboard;
+export default UserOverview;

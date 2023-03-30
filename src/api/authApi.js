@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {INTERNAL_MSG} from '../messages'
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL+'/api';
 const HTTP_OK = 200;
@@ -19,7 +18,7 @@ const authApi = {
           }});
         return response;
       } catch (error) {
-        throw new Error(INTERNAL_MSG);
+        throw new Error(error.response.data.message);
       }
     },
   
@@ -30,7 +29,7 @@ const authApi = {
       });
       return response;
     } catch (error) {
-      throw error;
+      throw new Error(error.response.data.message);
     }
   },
   async getCurrentUser(token){
@@ -43,7 +42,7 @@ const authApi = {
         });
         return response;
       } catch (error) {
-        throw new Error(INTERNAL_MSG);
+        throw new Error(error.response.data.message);
       }
   }
 

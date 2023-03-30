@@ -1,5 +1,4 @@
 import { authApi, HTTP_CREATED, HTTP_OK } from '../api/authApi';
-import {INTERNAL_MSG, ERROR_MSG} from '../messages'
 import SecureLS from "secure-ls";
 
 
@@ -18,11 +17,15 @@ class AuthServiceClass {
     }
     try {
       const response = await authApi.signup(formData);
-      if (response.status === HTTP_CREATED) return true;
+
+      if (response.status === HTTP_CREATED){
+        return true;
+      }else{
+        throw new Error(response.data.message);
+      }
     } catch (error) {
-      throw new Error(INTERNAL_MSG);
+      throw new Error(error.message);
     }
-    throw new Error(ERROR_MSG);
   }
 
 
@@ -35,21 +38,26 @@ class AuthServiceClass {
       if (response.status === HTTP_OK){
         this.saveToken(response.data)
         return response.data;
+      }else{
+        throw new Error(response.data.message);
       } 
     } catch (error) {
-      throw new Error(INTERNAL_MSG);
+      throw new Error(error.message);
     }
-    throw new Error(ERROR_MSG);
   }
   async getCurrentUser() {
     try {
       const token = this.getToken();
       const response = await authApi.getCurrentUser(token);
-      if (response.status === HTTP_OK) return  response.data.body;
+      if (response.status === HTTP_OK){
+        return  response.data.body;
+      }else
+      {
+        throw new Error(response.data.message);
+      }
     } catch (error) {
-      throw new Error(INTERNAL_MSG);
+      throw new Error(error.message);
     }
-    throw new Error(ERROR_MSG);
   }
 
   isLoggedIn(){
