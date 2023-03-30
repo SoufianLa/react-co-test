@@ -13,14 +13,9 @@ class AuthServiceClass {
     formData.append('lastName', lastName);
     formData.append('email', email);
     formData.append('password', password);
-
-    //formData.append('photos[]', pictures);
-
     for (let i = 0; i < pictures.length; i++) {
       formData.append(`photos[${i}]`, pictures[i], pictures[i].name);
     }
-    
-
     try {
       const response = await authApi.signup(formData);
       if (response.status === HTTP_CREATED) return true;
@@ -63,7 +58,6 @@ class AuthServiceClass {
   }
 
   saveToken(user) {
-    console.log(user)
     this.#secureLocalStorage.set("token", user.body.session.access_token);
   }
   
